@@ -20,14 +20,70 @@
 				justify-content: center;
 				-ms-align-items: center;
 				align-items: center;
-				background-image:  linear-gradient(to bottom, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 100%), url(https://cdn.allwallpaper.in/wallpapers/4200x1800/4886/taipei-101-architecture-4200x1800-wallpaper.jpg);
+				background-image:  linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.6) 100%), url(https://cdn.allwallpaper.in/wallpapers/4200x1800/4886/taipei-101-architecture-4200x1800-wallpaper.jpg);
 				background-repeat: no-repeat;
 				background-size: cover;
+			}
+			.svg-container {
+				position: relative;
+			}
+			.icon {
+				display: -webkit-flex;
+				display: -moz-flex;
+				display: -ms-flex;
+				display: -o-flex;
+				display: flex;
+				justify-content: space-between;
+				flex-direction: column;
+			}
+			.icon > div {
+				display: -webkit-flex;
+				display: -moz-flex;
+				display: -ms-flex;
+				display: -o-flex;
+				display: flex;
+				-ms-align-items: center;
+				align-items: center;
+			}
+			.icon > div p {
+				margin-left: 10px;
+			}
+			.blue,.red,.green {
+				width: 25px;
+				height: 25px;
+				border-radius: 5px;
+				display: -webkit-flex;
+				display: -moz-flex;
+				display: -ms-flex;
+				display: -o-flex;
+			}
+			.blue {
+				background-color: #269de2;
+			}
+			.red {
+				background-color: #ed4059;
+			}
+			.green {
+				background-color: #3da54b;
 			}
 		</style>
 	</head>
 	<body>
 		<div class='svg-container'></div>
+		<div class='icon'>
+			<div>
+				<div class="blue"></div>
+				<p>Total</p>
+			</div>
+			<div>
+				<div class="red"></div>
+				<p>Non-Chinese</p>
+			</div>
+			<div>
+				<div class="green"></div>
+				<p>Chinese</p>
+			</div>
+		</div>
 		<script type="text/javascript">
 			var url = "https://ntu-csx-d3js.github.io/b02106020/Tourists.csv";
 			d3.csv(url, function (data) {
