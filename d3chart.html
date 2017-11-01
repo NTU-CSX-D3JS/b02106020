@@ -1,0 +1,86 @@
+<html>
+	<head>
+		<script src="https://d3js.org/d3.v4.js"></script>
+		<style>
+			* {
+				font-family: 微軟正黑體, candara;
+				font-size: 16px;
+				font-weight: 700;
+			}
+			.heading {
+				font-size: 26px;
+				font-weight: 700;
+			}
+			body {
+				display: -webkit-flex;
+				display: -moz-flex;
+				display: -ms-flex;
+				display: -o-flex;
+				display: flex;
+				justify-content: center;
+				-ms-align-items: center;
+				align-items: center;
+				background-image:  linear-gradient(to bottom, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 100%), url(https://cdn.allwallpaper.in/wallpapers/4200x1800/4886/taipei-101-architecture-4200x1800-wallpaper.jpg);
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+		</style>
+	</head>
+	<body>
+		<div class='svg-container'></div>
+		<script type="text/javascript">
+			var url = "https://ntu-csx-d3js.github.io/b02106020/Tourists.csv";
+			d3.csv(url, function (data) {
+				console.log(data);
+
+				var w = 800;
+				var h = 500;
+
+				var m = 10; //邊界
+				var n = 50; //Axis邊界
+
+				//scale mapping
+				var Ymax = parseFloat(d3.max(data, function(d){return d.total}));
+				var Ymin = parseFloat(d3.min(data, function(d){return d.cn}));
+				var Xmax = parseFloat(d3.max(data, function(d){return d.year}));
+				var Xmin = parseFloat(d3.min(data, function(d){return d.year}));
+
+				var Xscale = d3.scaleLinear().domain([Xmin,Xmax]).range([0,w-m]);
+				var Yscale = d3.scaleLinear().domain([Ymin,Ymax]).range([h-m,0]); 
+				// SVG (0,0)在左上角
+
+				//D3.js line generator
+				var totalLine = d3.line().x(function(d){return Xscale(d.year)}).y(function(d){return Yscale(d.total)});
+				var non_cnLine = d3.line().x(function(d){return Xscale(d.year)}).y(function(d){return Yscale(d.non_cn)});
+				var cnLine = d3.line().x(function(d){return Xscale(d.year)}).y(function(d){return Yscale(d.cn)});
+
+				var svg = d3.select('.svg-container').append('svg').attr('width',w+200).attr('height',h+100);
+
+				//heading
+				var heading = svg.append('text').attr('class','heading').attr('fill','#262626').text('外國人來台旅遊人次統計').attr('x','50%').attr('y','25').attr('text-anchor','middle').attr('alignment-baseline','middle');
+
+				//draw line
+				var lineChart1 = svg.append('path').attr('class','line').attr('fill','none').attr('stroke','#269de2').attr('stroke-width','6').attr('transform','translate(100,50)').attr('d', function(d){return totalLine(data);});
+				var lineChart2 = svg.append('path').attr('class','line').attr('fill','none').attr('stroke','#ed4059').attr('stroke-width','6').attr('transform','translate(100,50)').attr('d', function(d){return non_cnLine(data);});
+				var lineChart3 = svg.append('path').attr('class','line').attr('fill','none').attr('stroke','#3da54b').attr('stroke-width','6').attr('transform','translate(100,50)').attr('d', function(d){return cnLine(data);});
+
+				//Axis
+				var axisY = svg.append('line').attr('class','axis').attr('fill','none').attr('style','stroke:#262626;stroke-width:6').attr('x1','0').attr('y1','0').attr('x2', '0').attr('y2', '500').attr('transform','translate(100,50)');
+				var axisX = svg.append('line').attr('class','axis').attr('fill','none').attr('style','stroke:#262626;stroke-width:6').attr('x1','0').attr('y1','500').attr('x2', '800').attr('y2', '500').attr('transform','translate(100,50)');
+
+				//Axis 
+				var xAxis = d3.axisBottom(Xscale);
+				var yAxis = d3.axisLeft(Yscale);
+
+				var XaxisAppend = svg.append("g").attr("class", "axis").call(xAxis).attr('transform','translate(100,550)');
+				var YaxisAppend = svg.append("g").attr("class", "axis").call(yAxis).attr('transform','translate(100,50)');
+
+				});
+
+
+
+
+
+		</script>
+	</body>
+</html>
