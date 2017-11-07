@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>bar chart</title>
+
+	<script src="https://d3js.org/d3.v4.js"></script>
+</head>
+<body>
+
+	<script type="text/javascript">
+		var url = "https://ntu-csx-d3js.github.io/b02106020/equipment.csv";
+		
+		d3.csv(url, function(data){
+
+			console.log(data);
+
+			var w = 800;
+			var h = 500;
+
+			var yMax = parseFloat(d3.max(data, function(d){return d.amount}));
+			var yMin = parseFloat(d3.min(data, function(d){return d.amount}));
+
+			var xScale = d3.scaleBand().domain(d3.range(data.length)).range([0,w]);
+			var yScale = d3.scaleLinear().domain([0, yMax]).range([0,h]);
+
+			//create svg
+			var svg = d3.select("body").append("svg").attr("width",w).attr("height",h);
+
+			//create bars
+			svg.selectAll("rect").data(data).enter().append("rect").attr("x",function(d, i){
+				return xScale(i);
+			}).attr("y", function(d){
+				console.log(yScale(d.amount))
+				return h - yScale(d.amount);
+			}).attr("width", xScale.bandwidth()).attr("height", function(d){
+				return yScale(d.amount);
+			}).attr("fill", function(d){
+				return "rgb("+d.amount+",0,"+d.amount+")";
+			}).on("click", function(d){
+				console.log(d);
+			});
+
+		});
+
+
+
+	</script>
+	
+</body>
+</html>
