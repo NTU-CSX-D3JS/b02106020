@@ -25,6 +25,8 @@
 
 			var vis = d3.select('#pie').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
 
+			console.log(vis);
+
 			var pie = d3.layout.pie().value(function(d){return parseInt(d.amount);});
 
 			// declare an arc generator function
