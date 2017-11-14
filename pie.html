@@ -5,6 +5,21 @@
 	<title>bar chart</title>
 
 	<script src="https://d3js.org/d3.v3.js"></script>
+
+	<style>
+		html, body {
+			height: 100%;
+			width: 100%;
+		}
+		#pie {
+			height: 100%;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
+
 </head>
 <body>
 	
@@ -23,7 +38,7 @@
 
 			var color = d3.scale.category20();
 
-			var vis = d3.select('#pie').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
+			var vis = d3.select('#pie').append("svg:svg").data([data]).attr("width", w).attr("height", h+100).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
 
 			console.log(vis);
 
@@ -49,12 +64,13 @@
 
 			// add the text
 			arcs.append("svg:text").attr("transform", function(d){
-						d.innerRadius = 0;
+						d.innerRadius = 100;
 						d.outerRadius = r;
 			    return "translate(" + arc.centroid(d) + ")";}).attr("text-anchor", "middle").text( function(d, i) {
 			    return data[i].label;}
 					);
 
+			vis.append("text").text("2016台大圖書館館藏").attr("x", -60).attr("y",280);
 
 		});
 
